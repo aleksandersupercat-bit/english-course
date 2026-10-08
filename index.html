@@ -27,7 +27,7 @@ function setupSoundToggle(){const button=document.querySelector('#sound-toggle')
 setupSoundToggle();
 setupWordSet();
 start(0);
-</script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));}</script><script>
+</script><script>if("serviceWorker" in navigator){window.addEventListener("load",async()=>{const registration=await navigator.serviceWorker.register("./sw.js");const checkForUpdate=()=>{if(navigator.onLine)registration.update().catch(()=>{});};checkForUpdate();window.addEventListener("online",checkForUpdate);});}</script><script>
 let installPrompt;
 window.addEventListener('beforeinstallprompt', event => {
   event.preventDefault();
