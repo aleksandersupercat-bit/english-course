@@ -34,6 +34,8 @@ window.addEventListener('appinstalled', () => {
   if (button) button.hidden = true;
 });
 window.addEventListener('load', () => {
+  const isInstalled = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  if (isInstalled) return;
   const button = document.createElement('button');
   button.id = 'install-app';
   button.className = 'primary';
