@@ -4,8 +4,8 @@ const names=['Выбери перевод','Найди слово','Собери
 const shuffle=a=>[...a].sort(()=>Math.random()-.5);
 let stage=0,order=[],pos=0,firstTry=0,hadError=false,solved=false,totalScores=[null,null,null];
 const lesson=document.querySelector('#lesson'),nav=document.querySelector('#stages');
-function navigation(){nav.innerHTML=names.map((n,i)=>`<button class="${i===stage?'active':''}" ${i===stage?'aria-current="step"':''} data-stage="${i}"><b>${totalScores[i]!==null?'✓ ':''}${i+1}</b>${n}</button>`).join('');nav.querySelectorAll('button').forEach(b=>b.onclick=()=>start(+b.dataset.stage));}
-function start(s){stage=s;order=shuffle(words);pos=0;firstTry=0;navigation();render();}
+function navigation(){nav.innerHTML=names.map((n,i)=>`<button class="${i===stage?'active':''}" ${i===stage?'aria-current="step"':''} data-stage="${i}"><b>${totalScores[i]!==null?'✓ ':''}${i+1}</b>${n}</button>`).join('');nav.querySelectorAll('button').forEach(b=>b.onclick=()=>start(+b.dataset.stage,true));}
+function start(s,scrollToLesson=false){stage=s;order=shuffle(words);pos=0;firstTry=0;navigation();render();if(scrollToLesson){requestAnimationFrame(()=>lesson.scrollIntoView({behavior:'smooth',block:'start'}));}}
 function render(){hadError=false;solved=false;const w=order[pos];lesson.innerHTML=`<div class="topline"><span>Этап ${stage+1} из 3</span><span>Слово ${pos+1} из ${words.length}</span></div><div class="track" role="progressbar" aria-label="Прогресс этапа" aria-valuemin="0" aria-valuemax="14" aria-valuenow="${pos}"><div class="fill" style="width:${pos/words.length*100}%"></div></div><h1 id="title">${names[stage]}</h1><p>${stage===0?'Что значит это слово?':stage===1?'Как это слово пишется по-английски?':'Как это будет по-английски? Нажимай на буквы.'}</p><div class="word" lang="${stage>0?'ru':'en'}">${w[stage>0?1:0]}</div>${stage===2?'<div id="slots" class="slots" role="group" aria-label="Буквы ответа"></div><div id="letters" class="letters" aria-label="Выбери буквы"></div><button id="erase" class="erase">Стереть букву</button><div class="feedback" role="status" aria-live="polite" id="feedback"></div><button class="primary" id="check" disabled>Проверить</button>':'<div class="answers" id="answers"></div><div class="feedback" role="status" aria-live="polite" id="feedback"></div>'}<button class="primary" id="next" hidden>Следующее слово</button>`;
 const next=document.querySelector('#next');next.style.display='none';next.onclick=()=>{if(!solved)return;pos++;if(pos===words.length)finish();else render();};
 if(stage<2){let choices=shuffle([w,...shuffle(words.filter(x=>x!==w)).slice(0,3)]);const box=document.querySelector('#answers');choices.forEach(c=>{const b=document.createElement('button');b.className='answer';b.textContent=c[stage===0?1:0];if(stage===1)b.lang='en';b.onclick=()=>{if(solved)return;if(c===w){b.classList.add('correct');accept();box.querySelectorAll('button').forEach(x=>x.disabled=true);}else{hadError=true;b.classList.add('wrong');b.disabled=true;document.querySelector('#feedback').textContent='Попробуй ещё раз. Ты справишься!';}};box.append(b);}); }else{
@@ -41,7 +41,8 @@ window.addEventListener('load', () => {
   button.className = 'primary';
   button.hidden = true;
   button.textContent = 'Установить приложение';
-  button.style.cssText = 'max-width:800px;margin:0 auto 20px;width:calc(100% - 48px)';
+  button.style.cssText = 'position:fixed;z-index:10;left:24px;right:24px;bottom:16px;max-width:752px;margin:auto;width:calc(100% - 48px);box-shadow:0 8px 24px #7b142a55';
+  document.body.style.paddingBottom = '92px';
   button.onclick = async () => {
     if (!installPrompt) return;
     installPrompt.prompt();
