@@ -41,21 +41,23 @@ window.addEventListener('appinstalled', () => {
 });
 window.addEventListener('load', () => {
   const isInstalled = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   if (isInstalled) return;
   const button = document.createElement('button');
   button.id = 'install-app';
   button.className = 'primary';
   button.hidden = true;
-  button.textContent = 'Установить приложение';
+  button.textContent = isIOS ? 'Добавить на экран iPhone' : 'Установить приложение';
   button.style.cssText = 'position:fixed;z-index:10;left:24px;right:24px;bottom:16px;max-width:752px;margin:auto;width:calc(100% - 48px);box-shadow:0 8px 24px #7b142a55';
   document.body.style.paddingBottom = '92px';
   button.onclick = async () => {
-    if (!installPrompt) return;
+    if (!installPrompt) { if (isIOS) alert('В Safari нажмите «Поделиться» — значок со стрелкой вверх — затем выберите «На экран Домой».'); return; }
     installPrompt.prompt();
     await installPrompt.userChoice;
     installPrompt = null;
     button.hidden = true;
   };
   document.body.append(button);
+  if (isIOS) button.hidden = false;
 });
 </script></body></html>
