@@ -1,8 +1,15 @@
-const CACHE = 'first-words-v4';
+const CACHE = 'first-words-v5';
 const APP_FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './uno.css', './game.js'];
 
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(APP_FILES)));
+  event.waitUntil(
+    caches.open(CACHE).then(cache => Promise.all(
+      APP_FILES.map(url => fetch(new Request(url, { cache: 'reload' })).then(response => {
+        if (!response.ok) throw new Error(`Unable to cache ${url}`);
+        return cache.put(url, response);
+      }))
+    ))
+  );
   self.skipWaiting();
 });
 
