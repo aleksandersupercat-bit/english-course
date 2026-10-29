@@ -1,4 +1,4 @@
-const CACHE = 'first-words-v10';
+const CACHE = 'first-words-v11';
 const APP_FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './uno.css', './game.js'];
 
 self.addEventListener('install', event => {

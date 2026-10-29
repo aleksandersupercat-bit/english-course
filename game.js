@@ -1,7 +1,7 @@
 (() => {
   const game = document.querySelector('#uno-game'); if (!game) return;
   const colors = ['red','yellow','green','blue'];
-  const labels = {red:'красный',yellow:'жёлтый',green:'зелёный',blue:'синий',skip:'⏭',reverse:'🔄',draw2:'+2',wild:'🌈',wild4:'+4',discard:'🗑'};
+  const labels = {red:'красный',yellow:'жёлтый',green:'зелёный',blue:'синий',skip:'🚫',reverse:'🔄',draw2:'+2',wild:'🌈',wild4:'+4',discard:'🗑'};
   const players = [['🙂','Ты'],['🐱','Миша'],['🐶','Боб'],['🦊','Лиса']];
   const teamOf = p => p % 2;
   let deck=[], discard=[], hands=[[],[],[],[]], current=0, direction=1, activeColor='red', pending=null, locked=false, finished=false, cpuTimer=null;
