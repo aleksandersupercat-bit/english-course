@@ -10,6 +10,11 @@
     @media(max-width:520px){.uno-board{grid-template-rows:98px 158px!important}.uno-hand .uno-card{margin-left:-16px!important}.friendly-cards{height:65px!important}.friendly-cards .uno-card{width:41px!important;height:60px!important;min-width:41px!important;margin-left:-15px!important;font-size:21px!important}.friendly-cards .uno-card::after{inset:10px 2px!important}}
   `;
   document.head.append(fanStyle);
+  document.querySelector('#course-tab')?.addEventListener('click', () => { const durak = document.querySelector('#durak-game'); if (durak) { durak.hidden = true; durak.classList.remove('durak-focus'); } });
+  document.querySelector('#game-tab')?.addEventListener('click', () => { const durak = document.querySelector('#durak-game'); if (durak) { durak.hidden = true; durak.classList.remove('durak-focus'); } });
+  const durakStyle = document.createElement('style');
+  durakStyle.textContent = `.durak-pile{overflow:visible!important}.durak-trump{z-index:1!important;top:38px!important;left:40px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important}.durak-trump:before{content:'КОЗЫРЬ';font-size:8px;font-weight:900;color:#394454}.durak-deck{background:repeating-linear-gradient(135deg,#18213b 0 7px,#e42d42 7px 11px,#f6cf45 11px 14px,#18213b 14px 20px)!important}.durak-deck:before{content:'Д';font-size:25px;border:2px solid #fff;border-radius:50%;padding:1px 8px}.durak-deck{font-size:0!important}.durak-deck small{font-size:12px!important}.durak-rule{margin:8px auto;padding:8px 10px;max-width:500px;border-radius:12px;background:#ffffff18;color:#dff8e6;font-size:12px}.durak-hand .durak-card{opacity:1!important}.durak-card{transition:transform .15s}.durak-hand .durak-card:active{transform:translateY(-12px)!important}`;
+  document.head.append(durakStyle);
   const colors = ['red','yellow','green','blue'];
   const labels = {red:'красный',yellow:'жёлтый',green:'зелёный',blue:'синий',skip:'🚫',reverse:'🔄',draw2:'+2',wild:'🌈',wild4:'+4',discard:'🗑'};
   const players = [['🙂','Ты'],['🐱','Миша'],['🐶','Боб'],['🦊','Лиса']];
