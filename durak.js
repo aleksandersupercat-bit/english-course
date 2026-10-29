@@ -8,7 +8,7 @@
  const beats=(def,atk)=>def.s===atk.s&&def.n>atk.n||(def.s===trump&&atk.s!==trump);
  const drawTo=p=>{while(hands[p].length<6&&deck.length)hands[p].push(deck.pop());sort(hands[p])};
  const names=['Ты','Компьютер'];
- function newGame(){clearTimeout(timer);deck=makeDeck();hands=[[],[]];for(let i=0;i<6;i++){hands[0].push(deck.pop());hands[1].push(deck.pop())}trump=deck[deck.length-1].s;sort(hands[0]);sort(hands[1]);table=[];attacker=hands[0].filter(c=>c.s===trump).sort((a,b)=>a.n-b.n)[0]?0:Math.random()<.5?0:1;phase='attack';taken=[];render();if(attacker===1)cpu();}
+ function newGame(){clearTimeout(timer);deck=makeDeck();hands=[[],[]];for(let i=0;i<6;i++){hands[0].push(deck.pop());hands[1].push(deck.pop())}trump=deck[deck.length-1].s;sort(hands[0]);sort(hands[1]);table=[];const lowest=p=>hands[p].filter(c=>c.s===trump).reduce((min,c)=>!min||c.n<min.n?c:min,null);const yours=lowest(0), cpuTrump=lowest(1);attacker=!yours&&!cpuTrump?Math.random()<.5?0:1:!cpuTrump?0:!yours?1:yours.n<cpuTrump.n?0:1;phase='attack';taken=[];render();if(attacker===1)cpu();}
  function tableRanks(){return new Set(table.flatMap(x=>[rank(x.a),x.d&&rank(x.d)].filter(Boolean)))}
  function canAttack(c){return !table.length||tableRanks().has(rank(c))}
  function maxAttack(){return Math.min(6,Math.max(1,hands[1-attacker].length+table.filter(x=>x.d).length))}
