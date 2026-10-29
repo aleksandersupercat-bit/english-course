@@ -1,5 +1,5 @@
-const CACHE = 'first-words-v13';
-const APP_FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './uno.css', './game.js'];
+const CACHE = 'first-words-v14';
+const APP_FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './uno.css', './game.js', './durak.js'];
 
 self.addEventListener('install', event => {
   event.waitUntil(
