@@ -1,4 +1,4 @@
-const CACHE = 'first-words-v33';
+const CACHE = 'first-words-v34';
 const CARD_RANKS = ['6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace'];
 const CARD_SUITS = ['clubs', 'diamonds', 'hearts', 'spades'];
 const CARD_FILES = CARD_SUITS.flatMap(suit => CARD_RANKS.map(rank => `./assets/cards/${rank}%20of%20${suit}.svg`));
