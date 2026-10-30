@@ -1,4 +1,4 @@
-const CACHE = 'first-words-v25';
+const CACHE = 'first-words-v26';
 const APP_FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './uno.css', './game.js', './durak.js', './assets/cards/back.svg'];
 
 self.addEventListener('install', event => {
@@ -34,11 +34,11 @@ self.addEventListener('fetch', event => {
   }
   event.respondWith(
     caches.match(event.request).then(cached => {
-      const refresh = fetch(event.request).then(response => {
+      if (cached) return cached;
+      return fetch(event.request).then(response => {
         if (response.ok) caches.open(CACHE).then(cache => cache.put(event.request, response.clone()));
         return response;
       });
-      return cached || refresh;
     })
   );
 });
